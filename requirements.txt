@@ -106,7 +106,7 @@ requests
 rfc3339-validator
 rfc3986-validator
 scikit-image
-scikit-learn
+scikit-learn==1.3.2
 scipy
 seaborn
 Send2Trash
