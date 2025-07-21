@@ -251,9 +251,16 @@ for key in MODELS_CONFIG.keys():
 
 app.include_router(api_router)
 
+# --- Health Check Endpoint for Render ---
+@app.get("/healthz")
+def health_check():
+    return {"status": "ok"}
+
 # --- Static Files ---
 # This must be mounted AFTER the API router to avoid conflicts
 app.mount("/", StaticFiles(directory="frontend/dist", html=True), name="static")
 
+import os
 if __name__ == "__main__":
-    uvicorn.run(app, host="0.0.0.0", port=8000) 
+    port = int(os.environ.get("PORT", 8000))
+    uvicorn.run(app, host="0.0.0.0", port=port) 
