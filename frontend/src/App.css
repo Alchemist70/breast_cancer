@@ -1,0 +1,375 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.logo {
+  height: 6em;
+  padding: 1.5em;
+  will-change: filter;
+  transition: filter 300ms;
+}
+.logo:hover {
+  filter: drop-shadow(0 0 2em #646cffaa);
+}
+.logo.react:hover {
+  filter: drop-shadow(0 0 2em #61dafbaa);
+}
+
+@keyframes logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  a:nth-of-type(2) .logo {
+    animation: logo-spin infinite 20s linear;
+  }
+}
+
+.App {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  display: flex;
+  flex-direction: column;
+}
+
+.hero-section {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  padding: 3rem 0;
+  border-radius: 15px;
+  margin-bottom: 2rem;
+  width: 100%;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.feature-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+  background: white;
+}
+
+.feature-card:hover {
+  transform: translateY(-5px);
+}
+
+.prediction-result {
+  background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  color: white;
+  border-radius: 15px;
+  border: none;
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-bottom: 2rem;
+}
+
+.upload-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.results-card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: white;
+}
+
+.visualization-card {
+  background: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border: none;
+}
+
+.navbar {
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.nav-tabs .nav-link {
+  border: none;
+  color: #6c757d;
+  font-weight: 500;
+  padding: 0.75rem 1.5rem;
+  transition: all 0.3s ease;
+}
+
+.nav-tabs .nav-link:hover {
+  color: #495057;
+  background-color: #f8f9fa;
+  border-radius: 8px 8px 0 0;
+}
+
+.nav-tabs .nav-link.active {
+  color: #667eea;
+  background-color: white;
+  border-bottom: 3px solid #667eea;
+  border-radius: 8px 8px 0 0;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(102, 126, 234, 0.3);
+}
+
+.btn-success {
+  background: linear-gradient(135deg, #56ab2f 0%, #a8e6cf 100%);
+  border: none;
+  border-radius: 10px;
+  padding: 0.75rem 2rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(86, 171, 47, 0.3);
+}
+
+.card {
+  border: none;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-2px);
+}
+
+.badge {
+  font-size: 0.875rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+}
+
+.progress {
+  height: 1.5rem;
+  border-radius: 10px;
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+.progress-bar {
+  border-radius: 10px;
+  font-weight: 600;
+}
+
+.alert {
+  border: none;
+  border-radius: 10px;
+  padding: 1rem 1.5rem;
+}
+
+.form-control,
+.form-select {
+  border-radius: 10px;
+  border: 2px solid #e9ecef;
+  padding: 0.75rem 1rem;
+  transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: #667eea;
+  box-shadow: 0 0 0 0.2rem rgba(102, 126, 234, 0.25);
+}
+
+.table {
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.table th {
+  background-color: #f8f9fa;
+  border: none;
+  font-weight: 600;
+  color: #495057;
+}
+
+.table td {
+  border: none;
+  border-bottom: 1px solid #e9ecef;
+}
+
+.spinner-border {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 992px) {
+  .feature-card,
+  .prediction-result {
+    min-height: unset;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .App {
+    padding: 0.5rem;
+  }
+  .hero-section {
+    padding: 2rem 0.5rem;
+    max-width: 100%;
+  }
+  .feature-card,
+  .prediction-result {
+    margin-bottom: 1rem;
+  }
+}
+
+/* Animation for loading states */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* Custom scrollbar for tables */
+.table-responsive::-webkit-scrollbar {
+  height: 8px;
+}
+
+.table-responsive::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 4px;
+}
+
+.table-responsive::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* --- AboutCancerTab Custom Styles --- */
+.about-cancer-section {
+  background: #f8f9fa;
+  border-radius: 12px;
+  padding: 24px 18px;
+  margin-bottom: 32px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+.about-cancer-divider {
+  border: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #6c63ff 0%, #e66465 100%);
+  margin: 32px 0 24px 0;
+}
+
+.about-cancer-section h4 {
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.about-cancer-section h5 {
+  font-weight: 600;
+  margin-top: 1.5em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+}
+
+.about-cancer-list {
+  margin: 0 0 1.5em 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.about-cancer-list-item {
+  display: flex;
+  align-items: center;
+  font-size: 1.08em;
+  background: #fff;
+  border-radius: 8px;
+  padding: 0.5em 1em;
+  box-shadow: 0 1px 4px rgba(108, 99, 255, 0.04);
+  transition: background 0.2s;
+}
+.about-cancer-list-item:hover {
+  background: #f0f4ff;
+}
+
+.about-cancer-section img,
+.about-cancer-section iframe {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.07);
+}
+
+.about-cancer-section .badge {
+  font-size: 1em;
+  padding: 0.5em 0.8em;
+  border-radius: 8px;
+}
+
+.fade-in {
+  opacity: 0;
+  animation: fadeInAnim 1.2s ease-in forwards;
+}
+
+@keyframes fadeInAnim {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-cancer-section {
+    padding: 16px 6px;
+  }
+  .about-cancer-section h4,
+  .about-cancer-section h5 {
+    font-size: 1.1em;
+  }
+  .about-cancer-list-item {
+    font-size: 1em;
+    padding: 0.5em 0.5em;
+  }
+}

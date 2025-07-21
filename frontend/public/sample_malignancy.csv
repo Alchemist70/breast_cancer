@@ -1,0 +1,5 @@
+project.project_id,cases.case_id,cases.consent_type,cases.days_to_consent,cases.days_to_lost_to_followup,cases.disease_type,cases.index_date,cases.lost_to_followup,cases.primary_site,cases.submitter_id,demographic.age_at_index,demographic.gender,demographic.race,demographic.ethnicity,diagnoses.tumor_grade,diagnoses.ajcc_pathologic_stage,diagnoses.tumor_size,diagnoses.lymph_nodes_examined,diagnoses.primary_diagnosis,diagnoses.prior_malignancy
+TCGA-BRCA,TCGA-A1-A0SD,GRU,0,0,Duodenal Neoplasms,2012-01-01,No,Breast,TCGA-A1-A0SD,65,female,white,not hispanic or latino,2,Stage IIA,25.5,3,Infiltrating duct carcinoma,yes
+TCGA-BRCA,TCGA-A1-A0SE,GRU,0,0,Duodenal Neoplasms,2012-01-01,No,Breast,TCGA-A1-A0SE,72,female,white,not hispanic or latino,3,Stage IIIA,35.2,8,Infiltrating lobular carcinoma,no
+TCGA-BRCA,TCGA-A1-A0SF,GRU,0,0,Duodenal Neoplasms,2012-01-01,No,Breast,TCGA-A1-A0SF,58,female,white,not hispanic or latino,2,Stage IB,18.7,2,Medullary carcinoma,no
+ 

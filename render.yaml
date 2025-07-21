@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: breast-cancer-ai
+    env: python
+    plan: free
+    buildCommand: "./build.sh"
+    startCommand: "gunicorn -w 4 -k uvicorn.workers.UvicornWorker app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.6
+      - key: NODE_VERSION
+        value: 18.17.1

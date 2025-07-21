@@ -1,0 +1,78 @@
+diagnoses.primary_diagnosis
+diagnoses.primary_diagnosis
+Infiltrating duct carcinoma, NOS                            3768
+Lobular carcinoma, NOS                                      1017
+Not Reported                                                 153
+Infiltrating duct and lobular carcinoma                      145
+Infiltrating duct mixed with other types of carcinoma         82
+Metaplastic carcinoma, NOS                                    69
+Mucinous adenocarcinoma                                       65
+Intraductal papillary adenocarcinoma with invasion            31
+Infiltrating lobular mixed with other types of carcinoma      28
+Invasive micropapillary carcinoma                             20
+Intraductal carcinoma, noninfiltrating, NOS                   19
+Medullary carcinoma, NOS                                      17
+Basal cell carcinoma, NOS                                     13
+Adenocarcinoma, NOS                                           11
+Paget disease and infiltrating duct carcinoma of breast       11
+Pleomorphic carcinoma                                         11
+Phyllodes tumor, malignant                                     9
+Papillary carcinoma, NOS                                       8
+Lobular carcinoma in situ, NOS                                 7
+Clear cell carcinoma                                           7
+Apocrine adenocarcinoma                                        7
+Secretory carcinoma of breast                                  5
+Carcinoma, NOS                                                 5
+Tubular adenocarcinoma                                         4
+Gastrointestinal stromal tumor, NOS                            3
+Adenoid cystic carcinoma                                       3
+Cribriform carcinoma, NOS                                      3
+Pheochromocytoma, NOS                                          3
+Malignant lymphoma, non-Hodgkin, NOS                           3
+Squamous cell carcinoma in situ, NOS                           3
+Melanoma in situ                                               2
+Carcinoma in situ, NOS                                         2
+Large cell neuroendocrine carcinoma                            2
+Myelodysplastic syndrome, NOS                                  2
+Infiltrating lobular carcinoma, NOS                            2
+Malignant melanoma, NOS                                        2
+Hodgkin lymphoma, NOS                                          2
+'--                                                            1
+Combined small cell carcinoma                                  1
+Name: count, dtype: int64
+
+
+diagnoses.metastasis_at_diagnosis
+diagnoses.metastasis_at_diagnosis
+'--                3635
+No Metastasis      1760
+Metastasis, NOS     151
+Name: count, dtype: int64
+
+
+demographic.vital_status
+demographic.vital_status
+Alive    4697
+Dead      848
+'--         1
+Name: count, dtype: int64
+
+
+diagnoses.ajcc_pathologic_stage
+diagnoses.ajcc_pathologic_stage
+Stage IIA     1566
+Stage IIB     1254
+Stage IIIA     795
+'--            568
+Stage IIIC     364
+Stage I        353
+Stage IA       349
+Stage IIIB      89
+Stage IV        77
+Stage X         42
+Stage IB        33
+Stage II        27
+Stage III       14
+Stage 0         12
+Stage 0is        3
+Name: count, dtype: int64

@@ -1,0 +1,21 @@
+{
+  "genetic_causes": [
+    "molecular_tests.chromosome",
+    "molecular_tests.chromosome_arm",
+    "molecular_tests.gene_symbol",
+    "molecular_tests.mismatch_repair_mutation",
+    "molecular_tests.mutation_codon",
+    "molecular_tests.second_gene_symbol"
+  ],
+  "genomic_quality": [
+    "analytes.concentration",
+    "analytes.rna_integrity_number"
+  ],
+  "molecular_markers": [
+    "molecular_tests.antigen",
+    "molecular_tests.test_result",
+    "molecular_tests.test_value",
+    "molecular_tests.test_value_range"
+  ],
+  "sequencing_data": []
+}

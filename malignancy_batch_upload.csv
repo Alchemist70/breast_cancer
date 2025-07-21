@@ -1,0 +1,2 @@
+demographic.age_at_index,diagnoses.tumor_grade,diagnoses.ajcc_pathologic_stage,diagnoses.tumor_size,diagnoses.lymph_nodes_examined,demographic.gender,demographic.race,demographic.ethnicity,diagnoses.primary_diagnosis,diagnoses.prior_malignancy
+65,2,Stage IIA,25.5,3,female,white,not hispanic or latino,Infiltrating duct carcinoma,yes
