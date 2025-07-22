@@ -9,7 +9,9 @@ pip install -r requirements.txt
 echo "--- Installing Node.js dependencies ---"
 cd frontend
 npm install
-cd ..
+
+echo "--- Cleaning old frontend build ---"
+rm -rf dist
 
 # --- Build Frontend ---
 echo "--- Building React frontend ---"
