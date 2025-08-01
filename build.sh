@@ -15,7 +15,6 @@ rm -rf dist
 
 # --- Build Frontend ---
 echo "--- Building React frontend ---"
-cd frontend
 npm run build
 cd ..
 
