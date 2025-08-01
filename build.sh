@@ -21,5 +21,4 @@ npm ci --only=production
 
 cd ..
 
-echo "--- Starting FastAPI server ---"
-gunicorn -w 2 -k uvicorn.workers.UvicornWorker --timeout 120 --keep-alive 2 app:app 
+echo "--- Build completed successfully ---" 
