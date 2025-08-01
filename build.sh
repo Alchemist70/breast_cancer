@@ -7,13 +7,18 @@ pip install --no-cache-dir -r requirements.txt
 
 echo "--- Installing Node.js dependencies ---"
 cd frontend
-npm ci --only=production
+npm ci
 
 echo "--- Cleaning old frontend build ---"
 rm -rf dist
 
 echo "--- Building React frontend ---"
 npm run build
+
+echo "--- Cleaning up node_modules (keeping only production) ---"
+rm -rf node_modules
+npm ci --only=production
+
 cd ..
 
 echo "--- Starting FastAPI server ---"
