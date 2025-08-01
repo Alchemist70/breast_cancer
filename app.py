@@ -11,6 +11,8 @@ import uvicorn
 from pydantic import BaseModel
 from fastapi import APIRouter
 from fastapi.staticfiles import StaticFiles
+import asyncio
+import threading
 
 # Initialize FastAPI app
 app = FastAPI(
@@ -49,39 +51,53 @@ MODELS_CONFIG = {
     'tissue_or_organ_of_origin': {'model_path': 'tissue_or_organ_of_origin_enhanced_model.joblib', 'scaler_path': 'scaler_tissue_or_organ_of_origin.joblib', 'features_path': 'feature_names_tissue_or_organ_of_origin.joblib', 'summary_path': 'model_summary_tissue_or_organ_of_origin.json'},
 }
 
-APP_STATE = {}
+APP_STATE = {'models_loading': True, 'models_loaded': 0, 'total_models': len(MODELS_CONFIG)}
 
-# Load all models and related files at startup
-for key, config in MODELS_CONFIG.items():
-    try:
-        model = joblib.load(config['model_path'])
-        scaler = joblib.load(config['scaler_path'])
-        
-        features = []
-        if 'features_path' in config:
-            if config['features_path'].endswith('.json'):
-                with open(config['features_path'], 'r') as f:
+def load_models_background():
+    """Load models in background thread"""
+    global APP_STATE
+    
+    for key, config in MODELS_CONFIG.items():
+        try:
+            model = joblib.load(config['model_path'])
+            scaler = joblib.load(config['scaler_path'])
+            
+            features = []
+            if 'features_path' in config:
+                if config['features_path'].endswith('.json'):
+                    with open(config['features_path'], 'r') as f:
+                        summary = json.load(f)
+                        features = summary.get('feature_names', [])
+                else:
+                    features = joblib.load(config['features_path'])
+
+            summary = {}
+            if 'summary_path' in config:
+                with open(config['summary_path'], 'r') as f:
                     summary = json.load(f)
-                    features = summary.get('feature_names', [])
-            else:
-                features = joblib.load(config['features_path'])
 
-        summary = {}
-        if 'summary_path' in config:
-            with open(config['summary_path'], 'r') as f:
-                summary = json.load(f)
+            APP_STATE[key] = {
+                'model': model,
+                'scaler': scaler,
+                'features': features,
+                'summary': summary,
+                'loaded': True
+            }
+            APP_STATE['models_loaded'] += 1
+            print(f"✅ {key} model loaded successfully")
+        except Exception as e:
+            APP_STATE[key] = {'loaded': False, 'error': str(e)}
+            print(f"❌ Error loading {key} model: {e}")
+    
+    APP_STATE['models_loading'] = False
+    print(f"🎉 All models loaded! ({APP_STATE['models_loaded']}/{APP_STATE['total_models']})")
 
-        APP_STATE[key] = {
-            'model': model,
-            'scaler': scaler,
-            'features': features,
-            'summary': summary,
-            'loaded': True
-        }
-        print(f"✅ {key} model loaded successfully")
-    except Exception as e:
-        APP_STATE[key] = {'loaded': False, 'error': str(e)}
-        print(f"❌ Error loading {key} model: {e}")
+@app.on_event("startup")
+async def startup_event():
+    """Start model loading in background"""
+    thread = threading.Thread(target=load_models_background)
+    thread.daemon = True
+    thread.start()
 
 # Pydantic Models and Helper functions
 class PredictionRequest(BaseModel):
@@ -254,7 +270,13 @@ app.include_router(api_router)
 # --- Health Check Endpoint for Render ---
 @app.get("/healthz")
 def health_check():
-    return {"status": "ok"}
+    if APP_STATE['models_loading']:
+        return {"status": "loading models", "models_loaded": APP_STATE['models_loaded'], "total_models": APP_STATE['total_models']}
+    return {"status": "ok", "models_loaded": APP_STATE['models_loaded'], "total_models": APP_STATE['total_models']}
+
+@app.get("/")
+def root():
+    return {"message": "Breast Cancer AI API", "status": "running"}
 
 # --- Static Files ---
 # This must be mounted AFTER the API router to avoid conflicts
