@@ -124,8 +124,8 @@ def single_prediction_logic(key: str, request: PredictionRequest):
     prediction_label = str(prediction_index)
     if class_labels and isinstance(prediction_index, (int, np.integer)) and prediction_index < len(class_labels):
         prediction_label = class_labels[prediction_index]
-
-    return {
+        
+        return {
         "prediction": prediction_label,
         "prediction_index": int(prediction_index),
         "probabilities": probabilities.tolist(),
@@ -151,7 +151,7 @@ def get_available_models():
             }
         else:
             available_models[key] = {"loaded": False, "error": state['error']}
-    return {
+        return {
         "available_models": available_models,
         "total_models": len(MODELS_CONFIG),
         "loaded_models": sum(1 for state in APP_STATE.values() if state['loaded'])
@@ -196,7 +196,7 @@ async def predict_all_targets(request: PredictionRequest):
         except Exception as e:
             results[key] = {"error": f"Prediction failed: {str(e)}"}
 
-    return {
+        return {
         "predictions": results,
         "total_targets": len(MODELS_CONFIG),
         "successful_predictions": sum(1 for r in results.values() if "error" not in r)
@@ -212,7 +212,7 @@ async def batch_predict_all(request: BatchPredictionRequest):
             batch_results.append({"case_id": i, "predictions": result["predictions"]})
         except Exception as e:
             batch_results.append({"case_id": i, "error": str(e)})
-    return {
+        return {
         "batch_predictions": batch_results,
         "total_cases": len(batch_results),
         "successful_predictions": sum(1 for r in batch_results if "error" not in r)
