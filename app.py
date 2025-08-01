@@ -274,8 +274,8 @@ def health_check():
         return {"status": "loading models", "models_loaded": APP_STATE['models_loaded'], "total_models": APP_STATE['total_models']}
     return {"status": "ok", "models_loaded": APP_STATE['models_loaded'], "total_models": APP_STATE['total_models']}
 
-@app.get("/")
-def root():
+@app.get("/api/status")
+def api_status():
     return {"message": "Breast Cancer AI API", "status": "running"}
 
 # --- Static Files ---
