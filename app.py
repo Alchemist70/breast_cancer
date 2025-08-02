@@ -115,7 +115,10 @@ def get_model_accuracy(summary):
 
 def single_prediction_logic(key: str, request: PredictionRequest):
     if not APP_STATE.get(key) or not APP_STATE[key]['loaded']:
-        raise HTTPException(status_code=500, detail=f"Model '{key}' not loaded")
+        if APP_STATE['models_loading']:
+            return {"error": f"Model '{key}' is still loading. Please wait a moment and try again."}
+        else:
+            return {"error": f"Model '{key}' failed to load: {APP_STATE.get(key, {}).get('error', 'Unknown error')}"}
     
     config = APP_STATE[key]
     model = config['model']
@@ -126,7 +129,7 @@ def single_prediction_logic(key: str, request: PredictionRequest):
         try:
             features = scaler.get_feature_names_out()
         except AttributeError:
-            raise HTTPException(status_code=500, detail=f"Could not determine features for model '{key}'")
+            return {"error": f"Could not determine features for model '{key}'"}
 
     features_data = {feat: [request.features.get(feat, 0)] for feat in features}
     features_df = pd.DataFrame(features_data)
@@ -141,7 +144,7 @@ def single_prediction_logic(key: str, request: PredictionRequest):
     if class_labels and isinstance(prediction_index, (int, np.integer)) and prediction_index < len(class_labels):
         prediction_label = class_labels[prediction_index]
         
-        return {
+    return {
         "prediction": prediction_label,
         "prediction_index": int(prediction_index),
         "probabilities": probabilities.tolist(),
@@ -179,13 +182,11 @@ async def predict_all_targets(request: PredictionRequest):
     CONFIDENCE_THRESHOLD = 0.3
     is_benign = False
 
-    try:
-        malignancy_result = single_prediction_logic('wdbc_malignancy', request)
-        results['wdbc_malignancy'] = malignancy_result
-        if malignancy_result.get('prediction') == 'Benign':
-            is_benign = True
-    except Exception as e:
-        results['wdbc_malignancy'] = {"error": f"Prediction failed: {str(e)}"}
+    # Check malignancy first
+    malignancy_result = single_prediction_logic('wdbc_malignancy', request)
+    results['wdbc_malignancy'] = malignancy_result
+    if malignancy_result.get('prediction') == 'Benign':
+        is_benign = True
 
     dependent_targets = ['stage', 'cancer_type', 'classification_of_tumor']
 
@@ -201,18 +202,12 @@ async def predict_all_targets(request: PredictionRequest):
             }
             continue
 
-        try:
-            if APP_STATE.get(key) and APP_STATE[key]['loaded']:
-                result = single_prediction_logic(key, request)
-                if "confidence" in result and result["confidence"] < CONFIDENCE_THRESHOLD and result["prediction"] != "N/A":
-                    result["prediction"] = "Inconclusive"
-                results[key] = result
-            else:
-                results[key] = {"error": APP_STATE.get(key, {}).get('error', 'Model not configured')}
-        except Exception as e:
-            results[key] = {"error": f"Prediction failed: {str(e)}"}
+        result = single_prediction_logic(key, request)
+        if "error" not in result and "confidence" in result and result["confidence"] < CONFIDENCE_THRESHOLD and result["prediction"] != "N/A":
+            result["prediction"] = "Inconclusive"
+        results[key] = result
 
-        return {
+    return {
         "predictions": results,
         "total_targets": len(MODELS_CONFIG),
         "successful_predictions": sum(1 for r in results.values() if "error" not in r)
@@ -241,26 +236,20 @@ for key in MODELS_CONFIG.keys():
     # This creates a closure to capture the correct 'key' for each iteration
     def create_endpoint_function(target_key):
         async def predict_target(request: PredictionRequest):
-            try:
-                result = single_prediction_logic(target_key, request)
-                dependent_targets = ["stage", "cancer_type", "classification_of_tumor"]
-                if target_key in dependent_targets:
-                    malignancy_prediction = "malignant"
-                    try:
-                        malignancy_result = single_prediction_logic("wdbc_malignancy", request)
-                        if "prediction" in malignancy_result:
-                            malignancy_prediction = str(malignancy_result["prediction"]).lower()
-                    except Exception:
-                        pass
-                    if malignancy_prediction == "benign":
-                        result["prediction"] = "N/A"
-                        result["confidence"] = 1.0
+            result = single_prediction_logic(target_key, request)
+            dependent_targets = ["stage", "cancer_type", "classification_of_tumor"]
+            if target_key in dependent_targets:
+                malignancy_prediction = "malignant"
+                malignancy_result = single_prediction_logic("wdbc_malignancy", request)
+                if "prediction" in malignancy_result:
+                    malignancy_prediction = str(malignancy_result["prediction"]).lower()
+                if malignancy_prediction == "benign":
+                    result["prediction"] = "N/A"
+                    result["confidence"] = 1.0
 
-                if "confidence" in result and result["confidence"] < 0.3 and result["prediction"] != "N/A":
-                    result["prediction"] = "Inconclusive"
-                return result
-            except Exception as e:
-                raise HTTPException(status_code=500, detail=str(e))
+            if "error" not in result and "confidence" in result and result["confidence"] < 0.3 and result["prediction"] != "N/A":
+                result["prediction"] = "Inconclusive"
+            return result
         return predict_target
 
     api_router.post(endpoint, name=f"predict_{key}")(create_endpoint_function(key))
