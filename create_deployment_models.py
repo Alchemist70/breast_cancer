@@ -51,16 +51,33 @@ def main():
     """Create deployment models for all targets"""
     print("🔧 Creating deployment-friendly models...")
     
-    # List of models to create
+    # List of all models to create (enhanced and RF models)
     models_to_create = [
+        # Enhanced models
         'age_at_index_enhanced_model.joblib',
-        'treatment_type_enhanced_model.joblib', 
+        'cancer_type_enhanced_model.joblib',
+        'classification_of_tumor_enhanced_model.joblib',
+        'clinical_trial_enhanced_model.joblib',
+        'disease_response_enhanced_model.joblib',
+        'metastasis_enhanced_model.joblib',
+        'stage_enhanced_model.joblib',
+        'treatment_outcome_enhanced_model.joblib',
+        'treatment_type_enhanced_model.joblib',
         'tissue_or_organ_of_origin_enhanced_model.joblib',
+        'vital_status_enhanced_model.joblib',
+        
+        # RF models
         'age_at_index_rf_model.joblib',
         'cancer_type_rf_model.joblib',
+        'classification_of_tumor_rf_model.joblib',
+        'clinical_trial_rf_model.joblib',
+        'disease_response_rf_model.joblib',
+        'metastasis_rf_model.joblib',
         'stage_rf_model.joblib',
+        'treatment_outcome_rf_model.joblib',
         'treatment_type_rf_model.joblib',
-        'tissue_or_organ_of_origin_rf_model.joblib'
+        'tissue_or_organ_of_origin_rf_model.joblib',
+        'vital_status_rf_model.joblib',
     ]
     
     for model_file in models_to_create:
@@ -81,7 +98,7 @@ def main():
             joblib.dump(scaler, scaler_file)
             
             # Save features
-            features_file = f"feature_names_{name}.joboblib"
+            features_file = f"feature_names_{name}.joblib"
             joblib.dump(features, features_file)
             
             # Save summary

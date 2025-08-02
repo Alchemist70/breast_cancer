@@ -34,9 +34,7 @@ Thumbs.db
 *.log
 
 # Large model files (exceed Git LFS budget)
-age_at_index_enhanced_model.joblib
-treatment_type_enhanced_model.joblib
-tissue_or_organ_of_origin_enhanced_model.joblib
+*_enhanced_model.joblib
 age_at_index_rf_model.joblib
 cancer_type_rf_model.joblib
 stage_rf_model.joblib
