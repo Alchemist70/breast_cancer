@@ -5,6 +5,9 @@ set -o errexit
 echo "--- Installing Python dependencies ---"
 pip install --no-cache-dir -r requirements.txt
 
+echo "--- Creating deployment models ---"
+python create_deployment_models.py
+
 echo "--- Installing Node.js dependencies ---"
 cd frontend
 npm ci
