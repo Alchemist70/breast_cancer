@@ -33,9 +33,8 @@ Thumbs.db
 # Logs
 *.log
 
-# Large model files (exceed Git LFS budget)
-*_enhanced_model.joblib
-*_rf_model.joblib
+# All model files (to avoid Git LFS budget issues)
+*.joblib
 
 # Large data files
 *.csv
