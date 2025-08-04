@@ -90,66 +90,62 @@ def main():
     for target in model_targets:
         # Enhanced model
         enhanced_file = f'{target}_enhanced_model.joblib'
-        if not os.path.exists(enhanced_file):
-            print(f"📝 Creating {enhanced_file}...")
-            model, scaler, features, summary = create_simple_model(target)
-            
-            # Save model
-            joblib.dump(model, enhanced_file)
-            
-            # Save scaler
-            scaler_file = f'scaler_{target}.joblib'
-            joblib.dump(scaler, scaler_file)
-            
-            # Save features
-            features_file = f'feature_names_{target}.joblib'
-            joblib.dump(features, features_file)
-            
-            # Save summary
-            summary_file = f'model_summary_{target}.json'
-            with open(summary_file, 'w') as f:
-                json.dump(summary, f, indent=2)
-            
-            print(f"✅ Created {enhanced_file}")
+        print(f"📝 Creating {enhanced_file}...")
+        model, scaler, features, summary = create_simple_model(target)
+        
+        # Save model
+        joblib.dump(model, enhanced_file)
+        
+        # Save scaler
+        scaler_file = f'scaler_{target}.joblib'
+        joblib.dump(scaler, scaler_file)
+        
+        # Save features
+        features_file = f'feature_names_{target}.joblib'
+        joblib.dump(features, features_file)
+        
+        # Save summary
+        summary_file = f'model_summary_{target}.json'
+        with open(summary_file, 'w') as f:
+            json.dump(summary, f, indent=2)
+        
+        print(f"✅ Created {enhanced_file}")
         
         # RF model
         rf_file = f'{target}_rf_model.joblib'
-        if not os.path.exists(rf_file):
-            print(f"📝 Creating {rf_file}...")
-            model, scaler, features, summary = create_simple_model(target)
-            joblib.dump(model, rf_file)
-            print(f"✅ Created {rf_file}")
+        print(f"📝 Creating {rf_file}...")
+        model, scaler, features, summary = create_simple_model(target)
+        joblib.dump(model, rf_file)
+        print(f"✅ Created {rf_file}")
     
     # Create WDBC files
-    if not os.path.exists('wdbc_malignancy_model.joblib'):
-        print("📝 Creating WDBC files...")
-        model, scaler, features = create_wdbc_model()
-        
-        joblib.dump(model, 'wdbc_malignancy_model.joblib')
-        joblib.dump(scaler, 'wdbc_malignancy_scaler.joblib')
-        joblib.dump(features, 'wdbc_malignancy_features.joblib')
-        
-        # Create WDBC summary
-        wdbc_summary = {
-            "model_name": "wdbc_malignancy",
-            "model_type": "RandomForest",
-            "test_accuracy": 0.95,
-            "class_names": ["Benign", "Malignant"]
-        }
-        
-        with open('model_summary_wdbc_malignancy.json', 'w') as f:
-            json.dump(wdbc_summary, f, indent=2)
-        
-        print("✅ Created WDBC files")
+    print("📝 Creating WDBC files...")
+    model, scaler, features = create_wdbc_model()
     
-    # Create general scaler if needed
-    if not os.path.exists('scaler.joblib'):
-        print("📝 Creating general scaler...")
-        general_scaler = StandardScaler()
-        X_dummy = np.random.rand(100, 50)
-        general_scaler.fit(X_dummy)
-        joblib.dump(general_scaler, 'scaler.joblib')
-        print("✅ Created general scaler")
+    joblib.dump(model, 'wdbc_malignancy_model.joblib')
+    joblib.dump(scaler, 'wdbc_malignancy_scaler.joblib')
+    joblib.dump(features, 'wdbc_malignancy_features.joblib')
+    
+    # Create WDBC summary
+    wdbc_summary = {
+        "model_name": "wdbc_malignancy",
+        "model_type": "RandomForest",
+        "test_accuracy": 0.95,
+        "class_names": ["Benign", "Malignant"]
+    }
+    
+    with open('model_summary_wdbc_malignancy.json', 'w') as f:
+        json.dump(wdbc_summary, f, indent=2)
+    
+    print("✅ Created WDBC files")
+    
+    # Create general scaler
+    print("📝 Creating general scaler...")
+    general_scaler = StandardScaler()
+    X_dummy = np.random.rand(100, 50)
+    general_scaler.fit(X_dummy)
+    joblib.dump(general_scaler, 'scaler.joblib')
+    print("✅ Created general scaler")
     
     print("🎉 All deployment files created successfully!")
 
