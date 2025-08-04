@@ -709,3 +709,4 @@ const ComprehensivePredictionTab = () => {
 };
 
 export default ComprehensivePredictionTab;
+ 
