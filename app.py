@@ -114,7 +114,7 @@ def get_model_accuracy(summary):
     return cr.get('accuracy', 'N/A')
 
 def single_prediction_logic(key: str, request: PredictionRequest):
-    if not APP_STATE.get(key) or not APP_STATE[key]['loaded']:
+    if not APP_STATE.get(key) or not APP_STATE[key].get('loaded', False):
         if APP_STATE['models_loading']:
             return {"error": f"Model '{key}' is still loading. Please wait a moment and try again."}
         else:
@@ -160,20 +160,24 @@ api_router = APIRouter(prefix="/api")
 def get_available_models():
     available_models = {}
     for key, state in APP_STATE.items():
-        if state['loaded']:
+        if key in ['models_loading', 'models_loaded', 'total_models']:
+            continue
+        if state.get('loaded', False):
             available_models[key] = {
                 "loaded": True,
-                "accuracy": get_model_accuracy(state['summary']),
-                "features_count": len(state['features']),
+                "accuracy": get_model_accuracy(state.get('summary', {})),
+                "features_count": len(state.get('features', [])),
                 "model_type": str(type(state['model'])).split('.')[-1][:-2],
-                "summary": state['summary']
+                "summary": state.get('summary', {})
             }
         else:
-            available_models[key] = {"loaded": False, "error": state['error']}
-        return {
+            available_models[key] = {"loaded": False, "error": state.get('error', 'Unknown error')}
+    
+    return {
         "available_models": available_models,
         "total_models": len(MODELS_CONFIG),
-        "loaded_models": sum(1 for state in APP_STATE.values() if state['loaded'])
+        "loaded_models": sum(1 for key, state in APP_STATE.items() 
+                           if key not in ['models_loading', 'models_loaded', 'total_models'] and state.get('loaded', False))
     }
 
 @api_router.post("/predict-all")
@@ -206,7 +210,7 @@ async def predict_all_targets(request: PredictionRequest):
         if "error" not in result and "confidence" in result and result["confidence"] < CONFIDENCE_THRESHOLD and result["prediction"] != "N/A":
             result["prediction"] = "Inconclusive"
         results[key] = result
-
+        
     return {
         "predictions": results,
         "total_targets": len(MODELS_CONFIG),
@@ -223,7 +227,8 @@ async def batch_predict_all(request: BatchPredictionRequest):
             batch_results.append({"case_id": i, "predictions": result["predictions"]})
         except Exception as e:
             batch_results.append({"case_id": i, "error": str(e)})
-        return {
+    
+    return {
         "batch_predictions": batch_results,
         "total_cases": len(batch_results),
         "successful_predictions": sum(1 for r in batch_results if "error" not in r)
