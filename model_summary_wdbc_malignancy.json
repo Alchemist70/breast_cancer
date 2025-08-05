@@ -1,33 +1,8 @@
 {
-  "model_type": "RandomForestClassifier",
-  "n_estimators": 100,
-  "class_names": ["Benign", "Malignant"],
-  "test_accuracy": 0.97,
-  "classification_report": {
-    "Benign": {
-      "precision": 0.96,
-      "recall": 1.0,
-      "f1-score": 0.98,
-      "support": 72
-    },
-    "Malignant": {
-      "precision": 1.0,
-      "recall": 0.93,
-      "f1-score": 0.96,
-      "support": 42
-    },
-    "accuracy": 0.97,
-    "macro avg": {
-      "precision": 0.98,
-      "recall": 0.96,
-      "f1-score": 0.97,
-      "support": 114
-    },
-    "weighted avg": {
-      "precision": 0.97,
-      "recall": 0.97,
-      "f1-score": 0.97,
-      "support": 114
-    }
-  }
+  "model_name": "wdbc_malignancy",
+  "test_accuracy": 0.95,
+  "class_names": [
+    "Benign",
+    "Malignant"
+  ]
 }

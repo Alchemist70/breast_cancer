@@ -1,19 +1,8 @@
 {
-  "model_type": "RandomForestClassifier",
+  "model_name": "cancer_type",
+  "test_accuracy": 0.85,
   "class_names": [
-    "Breast Invasive Ductal Carcinoma",
-    "Breast Invasive Lobular Carcinoma",
-    "Breast Mixed Ductal and Lobular Carcinoma",
-    "Metaplastic Breast Cancer",
-    "Breast Invasive Mixed Mucinous Carcinoma",
-    "Solid Papillary Carcinoma with Invasion",
-    "Mucinous Breast Cancer",
-    "Invasive Micropapillary Carcinoma of the Breast",
-    "Paget's Disease of the Nipple",
-    "Infiltrating Ductal Carcinoma",
-    "Intraductal Carcinoma, Noninfiltrating",
-    "Adenocarcinoma with mixed subtypes",
-    "Other"
-  ],
-  "test_accuracy": 1.0
+    "Class_0",
+    "Class_1"
+  ]
 }

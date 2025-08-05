@@ -1,20 +1,8 @@
 {
-  "model_type": "RandomForestClassifier",
+  "model_name": "stage",
+  "test_accuracy": 0.85,
   "class_names": [
-    "Stage I",
-    "Stage IA",
-    "Stage IB",
-    "Stage II",
-    "Stage IIA",
-    "Stage IIB",
-    "Stage III",
-    "Stage IIIA",
-    "Stage IIIB",
-    "Stage IIIC",
-    "Stage IV",
-    "Stage X",
-    "Stage 0",
-    "Stage 0is"
-  ],
-  "test_accuracy": 1.0
+    "Class_0",
+    "Class_1"
+  ]
 }
